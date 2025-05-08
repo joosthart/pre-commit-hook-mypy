@@ -29,17 +29,35 @@ jobs:
         git init
         git config --local user.email "hartjoost@gmail.com"
         git config --local user.name "Joost Hart"
+        
+        # Create pre-commit config with verbose mode
         cat > .pre-commit-config.yaml << EOF
         repos:
         -   repo: $(pwd)/..
             rev: main
             hooks:
             -   id: mypy-committed
+                verbose: true
         EOF
+        
+        # Install pre-commit
         pre-commit install
+        
+        # Test with a good file (should pass)
         cp ../test_example/good_file.py good.py
         git add good.py .pre-commit-config.yaml
-        git commit -m "Add good file"  # This should pass
+        git commit -m "Add good file"
+        
+        # Test with a bad file (should fail)
         cp ../test_example/bad_file.py bad.py
         git add bad.py
+        
+        # Print debug info
+        echo "=== Files staged for commit ==="
+        git diff --cached --name-only
+        
+        echo "=== Running mypy directly on bad.py ==="
+        python -m mypy bad.py || true
+        
+        echo "=== Running the pre-commit hook ==="
         ! git commit -m "Add bad file"  # This should fail 

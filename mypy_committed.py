@@ -38,12 +38,29 @@ def run_mypy(args: List[str]) -> Tuple[int, List[str]]:
 def filter_output_for_committed_files(lines: List[str], committed_files: Set[str]) -> List[str]:
     """Filter mypy output to only include lines from committed files."""
     filtered_lines = []
+    
+    # Create a new list with normalized paths for easier matching
+    normalized_committed_files = {f.replace("\\", "/") for f in committed_files}
+    
     for line in lines:
-        # Check if the line starts with a file path that's in our committed files
-        for committed_file in committed_files:
-            if line.startswith(committed_file + ":"):
+        # Normalize path separators for consistent matching
+        line_normalized = line.replace("\\", "/")
+        
+        # Check if the line starts with any of the committed files
+        for committed_file in normalized_committed_files:
+            # Use a more robust way to check if the error is for this file
+            # mypy error format is typically "file:line: error: message"
+            parts = line_normalized.split(":", 2)
+            if len(parts) >= 2 and parts[0] == committed_file:
                 filtered_lines.append(line)
                 break
+            
+            # Also check for alternative format where path might include directory
+            for path_part in committed_file.split("/"):
+                if line_normalized.startswith(f"{committed_file}:"):
+                    filtered_lines.append(line)
+                    break
+    
     return filtered_lines
 
 
@@ -59,8 +76,11 @@ def main() -> int:
         print("No Python files being committed.")
         return 0
 
-    # Run mypy on all files (for proper module resolution)
-    exit_code, output_lines = run_mypy(mypy_args)
+    # Use the provided file list as input to mypy if any, otherwise use the committed files
+    input_files = args.files if args.files else list(committed_files)
+    
+    # Run mypy on the specified files
+    exit_code, output_lines = run_mypy(mypy_args + input_files)
     
     # If mypy succeeded, no need to filter
     if exit_code == 0:
@@ -69,6 +89,11 @@ def main() -> int:
     # Filter the output to only show errors from committed files
     if not args.show_all_errors:
         filtered_lines = filter_output_for_committed_files(output_lines, committed_files)
+        
+        # Debugging: Print what we found
+        if not filtered_lines and output_lines:
+            print(f"Debug: Found {len(output_lines)} total errors, but none in committed files.")
+            print(f"Debug: Committed files: {committed_files}")
         
         # If there are no errors in committed files, consider it a success
         if not filtered_lines:
