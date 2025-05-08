@@ -13,7 +13,7 @@ This is particularly useful when working in large codebases where you want to en
 Add this to your `.pre-commit-config.yaml`:
 
 ```yaml
--   repo: https://github.com/yourusername/pre-commit-hook-mypy
+-   repo: https://github.com/joosthart/pre-commit-hook-mypy
     rev: v0.1.0  # Use the ref you want to point at
     hooks:
     -   id: mypy-committed
@@ -24,7 +24,7 @@ Add this to your `.pre-commit-config.yaml`:
 The hook supports the same configuration options as the standard mypy hook, such as:
 
 ```yaml
--   repo: https://github.com/yourusername/pre-commit-hook-mypy
+-   repo: https://github.com/joosthart/pre-commit-hook-mypy
     rev: v0.1.0
     hooks:
     -   id: mypy-committed

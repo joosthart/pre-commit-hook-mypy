@@ -1,0 +1,7 @@
+-   id: mypy-committed
+    name: mypy (committed files only)
+    description: Filter mypy output to only show errors in files being committed
+    entry: mypy-committed
+    language: python
+    types: [python]
+    require_serial: true 
