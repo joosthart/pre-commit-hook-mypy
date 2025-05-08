@@ -40,6 +40,24 @@ The hook:
 3. Filters the output to only show errors from the committed files
 4. Fails if any errors are found in the committed files
 
+## Development
+
+### Setup
+
+1. Clone the repository
+2. Create a virtual environment: `python -m venv venv`
+3. Activate the virtual environment
+4. Install development dependencies: `pip install -r requirements-dev.txt`
+5. Install the package in development mode: `pip install -e .`
+
+### Running Tests
+
+Run the tests with pytest:
+
+```bash
+pytest
+```
+
 ## License
 
 MIT 

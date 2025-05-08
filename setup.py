@@ -1,15 +1,16 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name="pre-commit-hook-mypy",
     version="0.1.0",
     description="A pre-commit hook that runs mypy only on files that are being committed",
-    author="Joost Hart",
+    author="Joost 't Hart",
     author_email="hartjoost@gmail.com",
     url="https://github.com/joosthart/pre-commit-hook-mypy",
-    py_modules=["mypy_committed"],
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
     entry_points={
-        "console_scripts": ["mypy-committed=mypy_committed:main"],
+        "console_scripts": ["mypy-committed=pre_commit_hook_mypy.cli:cli"],
     },
     install_requires=["mypy"],
     classifiers=[
@@ -19,4 +20,5 @@ setup(
         "Environment :: Console",
         "Intended Audience :: Developers",
     ],
-) 
+    python_requires=">=3.6",
+)

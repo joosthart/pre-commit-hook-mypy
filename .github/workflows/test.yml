@@ -28,7 +28,7 @@ jobs:
         mkdir -p test_repo && cd test_repo
         git init
         git config --local user.email "hartjoost@gmail.com"
-        git config --local user.name "Joost Hart"
+        git config --local user.name "Joost 't Hart"
         
         # Create pre-commit config with verbose mode
         cat > .pre-commit-config.yaml << EOF
