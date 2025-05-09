@@ -8,7 +8,7 @@ repos:
     -   id: check-added-large-files
 
 -   repo: https://github.com/joosthart/pre-commit-hook-mypy
-    rev: v0.1.0
+    rev: v0.1.1
     hooks:
     -   id: mypy-committed
         # You can customize mypy behavior with args

@@ -14,7 +14,7 @@ Add this to your `.pre-commit-config.yaml`:
 
 ```yaml
 -   repo: https://github.com/joosthart/pre-commit-hook-mypy
-    rev: v0.1.0  # Use the ref you want to point at
+    rev: v0.1.1  # Use the ref you want to point at
     hooks:
     -   id: mypy-committed
 ```
@@ -25,7 +25,7 @@ The hook supports the same configuration options as the standard mypy hook, such
 
 ```yaml
 -   repo: https://github.com/joosthart/pre-commit-hook-mypy
-    rev: v0.1.0
+    rev: v0.1.1
     hooks:
     -   id: mypy-committed
         args: [--strict, --ignore-missing-imports]

@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="pre-commit-hook-mypy",
-    version="0.1.0",
+    version="0.1.1",
     description="A pre-commit hook that runs mypy only on files that are being committed",
     author="Joost 't Hart",
     author_email="hartjoost@gmail.com",
